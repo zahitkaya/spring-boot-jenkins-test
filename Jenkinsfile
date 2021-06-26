@@ -1,39 +1,9 @@
 pipeline {
-
-    environment {
-        registry = "zahit/jenkins-test"
-        registryCredential = 'zahit'
-        dockerImage = ''
-    }
-
-    agent any
+    agent { docker { image 'maven:3.3.3' } }
     stages {
-       stage('Cloning our Git') {
+        stage('build') {
             steps {
-                git 'https://github.com/zahitkaya/spring-boot-jenkins-test'
-            }
-        }
-
-        stage('Building our image') {
-            steps {
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-
-        stage('Deploy our image') {
-            steps {
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage('Cleaning up') {
-            steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
+                sh 'mvn --version'
             }
         }
     }
