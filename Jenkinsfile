@@ -10,7 +10,9 @@ pipeline {
     stages {
        stage('Cloning our Git') {
             steps {
-                git 'https://github.com/zahitkaya/spring-boot-jenkins-test'
+                bat"""
+                mvn clean install
+                """
             }
         }
     }
