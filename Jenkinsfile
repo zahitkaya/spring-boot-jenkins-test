@@ -11,7 +11,7 @@ pipeline {
        stage('Cloning our Git') {
             steps {
                 bat"""
-                mvn clean install
+                cd
                 """
             }
         }
